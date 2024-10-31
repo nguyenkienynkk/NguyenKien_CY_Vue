@@ -3,6 +3,7 @@
     <Item
       :name="item.name"
       :productCode="index"
+      :isChecked="item.isChecked"
       @selectProduct="handleSelectProduct"
     />
     <Check :is-checked="item.isChecked" />
@@ -38,7 +39,11 @@ const items = ref({
 })
 
 function handleSelectProduct(productCode: string) {
-  console.log(`Product with code "${productCode}" selected!`)
+  const selectedItem = items.value[productCode]
+  if (selectedItem.isChecked === 'Chưa xác nhận') {
+    selectedItem.isChecked = 'Đã xác nhận'
+    alert(`Product with code "${productCode}" has been confirmed!`)
+  }
 }
 </script>
 

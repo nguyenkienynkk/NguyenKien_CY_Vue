@@ -1,25 +1,50 @@
 <template>
-  <div class="item" @click="selectProduct">
+  <div class="item">
     {{ name }}
+    <button @click="confirmProduct" :disabled="isChecked === 'Đã xác nhận'">
+      Xác nhận sản phẩm
+    </button>
   </div>
 </template>
+
 <script setup lang="ts">
-import { defineProps, defineEmits, onMounted } from 'vue'
+import { defineProps, defineEmits } from 'vue'
+
 const props = defineProps({
-  name: { type: String, required: true },
-  productCode: { type: String, required: true },
+  name: {
+    type: String,
+    required: true,
+  },
+  productCode: {
+    type: String,
+    required: true,
+  },
+  isChecked: {
+    type: String,
+    required: true,
+  }
 })
+
 const emit = defineEmits(['selectProduct'])
-function selectProduct() {
+
+function confirmProduct() {
   emit('selectProduct', props.productCode)
 }
-onMounted(() => console.log(`Item has been created with name: ${props.name}`))
 </script>
+
 <style scoped>
 .item {
   font-size: 24px;
   color: blue;
   text-align: center;
-  cursor: pointer;
+  margin-bottom: 10px;
+}
+button {
+  margin-top: 5px;
+  padding: 5px 10px;
+}
+button:disabled {
+  background-color: grey;
+  cursor: not-allowed;
 }
 </style>
