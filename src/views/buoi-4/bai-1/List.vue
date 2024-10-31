@@ -1,38 +1,50 @@
 <template>
   <div v-for="(item, index) in items" :key="index">
-    <Item :name="item.name" />
+    <Item
+      :name="item.name"
+      :productCode="index"
+      @selectProduct="handleSelectProduct"
+    />
     <Check :is-checked="item.isChecked" />
   </div>
 </template>
 
 <script setup lang="ts">
 import Item from '@/views/buoi-4/bai-1/Item.vue'
-import { ref } from 'vue'
 import Check from '@/views/buoi-4/bai-1/Check.vue'
+import { ref } from 'vue'
 
 const items = ref({
-  buoi: {
-    name:'Buổi 1: Xây dựng trang web với Vue.js',
-    isChecked: 'Da xac nhan',
+  buoi1: {
+    name: 'Buổi 1: Xây dựng trang web với Vue.js',
+    isChecked: 'Đã xác nhận',
   },
   buoi2: {
-    name: 'Bu��i 2: Thiết kế và tạo màn hình',
-    isChecked: 'Da xac nhan',
+    name: 'Buổi 2: Thiết kế và tạo màn hình',
+    isChecked: 'Đã xác nhận',
   },
   buoi3: {
-    name: 'Bu��i 3: Thiết kế và tạo giao diện',
-    isChecked: 'Chua xac nhan',
+    name: 'Buổi 3: Thiết kế và tạo giao diện',
+    isChecked: 'Chưa xác nhận',
   },
   buoi4: {
-    name: 'Bu��i 4: Thiết kế và tạo component',
-    isChecked: 'Chua xac nhan',
+    name: 'Buổi 4: Thiết kế và tạo component',
+    isChecked: 'Chưa xác nhận',
   },
   buoi5: {
-    name: 'Bu��i 5: Thiết kế và tạo API',
-    isChecked: 'Da xac nhan',
+    name: 'Buổi 5: Thiết kế và tạo API',
+    isChecked: 'Đã xác nhận',
   }
 })
 
+function handleSelectProduct(productCode: string) {
+  console.log(`Product with code "${productCode}" selected!`)
+}
 </script>
 
-<style scoped></style>
+<style scoped>
+.list {
+  padding: 10px;
+  border: 1px solid #000;
+}
+</style>
