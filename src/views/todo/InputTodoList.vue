@@ -43,18 +43,15 @@ defineProps({
 
 input {
   width: 100%;
-  padding: 12px 15px;
+  padding: 8px 15px;
   font-size: 1rem;
-  border: 2px solid #ddd;
-  border-radius: 8px;
+  border: 1px solid #333;
+  border-radius: 5px;
   transition: border-color 0.3s, box-shadow 0.3s, background-color 0.3s;
-  color: #333;
   background-color: #f9f9f9;
 }
 
 input:focus {
-  background: rgb(2,0,36);
-  background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 0%, rgba(0,151,255,0.31985294117647056) 77%);
   outline: none;
   background-color: #ffffff;
 }
@@ -73,7 +70,6 @@ input::placeholder {
   top: 50%;
   transform: translateY(-50%);
   font-size: 1rem;
-  color: #aaa;
   pointer-events: none;
   transition: 0.2s ease all;
 }

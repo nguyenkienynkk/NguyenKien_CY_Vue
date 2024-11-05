@@ -57,7 +57,6 @@ watch(() => props.modelValue, (newValue) => {
   width: 100%;
 }
 
-/* Styling cho phần đã chọn */
 .selected {
   display: flex;
   justify-content: space-between;
@@ -77,15 +76,13 @@ watch(() => props.modelValue, (newValue) => {
   background-color: #e7f3ff;
 }
 
-/* Mũi tên dropdown sử dụng Font Awesome */
 .arrow {
   margin-left: 10px;
-  font-family: 'Font Awesome 5 Free'; /* Đảm bảo font được thiết lập đúng */
-  font-weight: 900; /* Chọn trọng số font cho icon */
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
   transition: transform 0.3s ease;
 }
 
-/* Mở dropdown */
 .options {
   position: absolute;
   z-index: 1000;
@@ -96,11 +93,10 @@ watch(() => props.modelValue, (newValue) => {
   max-height: 200px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   animation: fadeIn 0.3s ease;
-  bottom: 100%; /* Đặt dropdown ở trên phần đã chọn */
-  transform: translateY(-5px); /* Một chút đẩy lên để không chạm vào viền */
+  bottom: 100%;
+  transform: translateY(-5px);
 }
 
-/* Hiệu ứng fadeIn cho dropdown */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -112,7 +108,6 @@ watch(() => props.modelValue, (newValue) => {
   }
 }
 
-/* Styling cho từng option */
 .option {
   padding: 10px;
   color: #333;

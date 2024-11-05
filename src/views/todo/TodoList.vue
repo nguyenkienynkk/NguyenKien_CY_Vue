@@ -1,9 +1,30 @@
 <template>
   <div class="container">
-    <ButtonTodoList custom-color="green" @button-event-click="openAddModal">
-      <template #default>Add Task</template>
-    </ButtonTodoList>
-
+    <div class="flex gap-3 justify-center items-center">
+      <ButtonTodoList
+        style="border-radius: 5px; background-color: #7fe8dc; color: #034242"
+        @button-event-click="openAddModal"
+      >
+        <template #default>Add Task</template>
+      </ButtonTodoList>
+      <ButtonTodoList
+        @button-event-click="deleteSelectedTasks"
+        style="
+          background-color: rgba(253, 0, 0, 0.14);
+          color: red;
+          border-radius: 5px;
+        "
+      >
+        <template #default>Delete Selected</template>
+      </ButtonTodoList>
+      <br />
+      <ButtonTodoList
+        style="border-radius: 5px; background-color: #0bba0b; color: white"
+        @button-event-click="toggleExportDisplay"
+      >
+        <template #default>Export</template>
+      </ButtonTodoList>
+    </div>
     <ModalTodoList v-if="showModal" @close="closeAddModal" title="Add New Task">
       <template #default>
         <div class="modal-content">
@@ -25,18 +46,26 @@
             v-model="newTask.status"
             placeholder="Status"
           />
-          <ButtonTodoList custom-color="blue" @button-event-click="addTask">
-            <template #default>Add Task</template>
+          <ButtonTodoList @button-event-click="addTask">
+            <template #default>
+              <div style="padding:10px 20px; border-radius:5px; color: #024e4e; background-color: aqua">Add Task</div>
+            </template>
           </ButtonTodoList>
         </div>
       </template>
     </ModalTodoList>
 
-    <!-- Modal Update Task -->
-    <ModalTodoList v-if="showUpdateModal" @close="closeUpdateModal" title="Update Task">
+    <ModalTodoList
+      v-if="showUpdateModal"
+      @close="closeUpdateModal"
+      title="Update Task"
+    >
       <template #default>
         <div class="modal-content">
-          <InputTodoList v-model="updateTaskDetails.taskName" placeholder="Task Name" />
+          <InputTodoList
+            v-model="updateTaskDetails.taskName"
+            placeholder="Task Name"
+          />
           <input
             type="date"
             v-model="updateTaskDetails.startDate"
@@ -54,8 +83,20 @@
             v-model="updateTaskDetails.status"
             placeholder="Status"
           />
-          <ButtonTodoList custom-color="blue" @button-event-click="updateTask">
-            <template #default>Update Task</template>
+          <ButtonTodoList @button-event-click="updateTask">
+            <template #default>
+              <div
+                style="
+                  padding: 10px 20px;
+                  border-radius: 5px;
+                  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+                  background-color: aqua;
+                  color: #030353;
+                "
+              >
+                Update Task
+              </div>
+            </template>
           </ButtonTodoList>
         </div>
       </template>
@@ -79,24 +120,39 @@
         <CheckBoxTodoList v-model="item.isChecked" />
       </template>
       <template #action="{ item }">
-        <ButtonTodoList @button-event-click="openUpdateModal(item)">
+        <ButtonTodoList
+          style="
+            color: #086d59;
+            background-color: #ccfbf1;
+            box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+            border-radius: 5px;
+          "
+          @button-event-click="openUpdateModal(item)"
+        >
           <template #default>Update</template>
         </ButtonTodoList>
       </template>
     </TableTodoList>
-
-    <ButtonTodoList
-      custom-color="red"
-      @button-event-click="deleteSelectedTasks"
-    >
-      <template #default>Delete Selected</template>
-    </ButtonTodoList>
-    <ButtonTodoList
-      custom-color="red"
-      @button-event-click="exportData"
-    >
-      <template #default>Export</template>
-    </ButtonTodoList>
+    <div v-if="showAllData" class="all-data-section">
+      <h2>All Task Data</h2>
+      <table>
+        <thead>
+          <tr>
+            <th v-for="column in columns" :key="column.key">
+              {{ column.label }}
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="task in tasks" :key="task.id">
+            <td>{{ task.taskName }}</td>
+            <td>{{ task.status }}</td>
+            <td>{{ task.startDate }}</td>
+            <td>{{ task.endDate }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </template>
 
@@ -168,7 +224,10 @@ const columns = [
   { key: 'startDate', label: 'Start Date' },
   { key: 'endDate', label: 'End Date' },
 ]
-
+const showAllData = ref(false)
+const toggleExportDisplay = () => {
+  showAllData.value = !showAllData.value
+}
 const filteredTasks = computed(() => {
   return tasks.value.filter(task => {
     const matchesQuery = task.taskName
@@ -193,7 +252,7 @@ const closeUpdateModal = () => {
   showUpdateModal.value = false
 }
 
-const openUpdateModal = (item) => {
+const openUpdateModal = item => {
   console.log('Opening Update Modal for:', item)
   updateTaskDetails.taskName = item.taskName
   updateTaskDetails.startDate = item.startDate
@@ -204,31 +263,35 @@ const openUpdateModal = (item) => {
 
 const addTask = () => {
   console.log('Adding task:', newTask)
-  if (newTask.taskName && newTask.startDate && newTask.endDate && newTask.status) {
+  if (
+    newTask.taskName &&
+    newTask.startDate &&
+    newTask.endDate &&
+    newTask.status
+  ) {
     tasks.value.push({
       id: tasks.value.length + 1,
       ...newTask,
       isChecked: false,
-    });
-    closeAddModal();
-    newTask.taskName = '';
-    newTask.startDate = '';
-    newTask.endDate = '';
-    newTask.status = 'todo';
+    })
+    closeAddModal()
+    newTask.taskName = ''
+    newTask.startDate = ''
+    newTask.endDate = ''
+    newTask.status = 'todo'
   }
 }
-function exportData(){
-  alert('Data')
-}
 const updateTask = () => {
-  const task = tasks.value.find(task => task.taskName === updateTaskDetails.taskName);
+  const task = tasks.value.find(
+    task => task.taskName === updateTaskDetails.taskName,
+  )
   if (task) {
-    task.taskName = updateTaskDetails.taskName;
-    task.startDate = updateTaskDetails.startDate;
-    task.endDate = updateTaskDetails.endDate;
-    task.status = updateTaskDetails.status;
-    console.log('Task updated:', task);
-    closeUpdateModal();
+    task.taskName = updateTaskDetails.taskName
+    task.startDate = updateTaskDetails.startDate
+    task.endDate = updateTaskDetails.endDate
+    task.status = updateTaskDetails.status
+    console.log('Task updated:', task)
+    closeUpdateModal()
   }
 }
 
@@ -240,25 +303,26 @@ const deleteSelectedTasks = () => {
 <style scoped>
 .container {
   padding: 40px;
-  background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   transition: background 0.5s ease;
-  animation: backgroundAnimation 10s infinite alternate;
 }
 
-@keyframes backgroundAnimation {
-  0% {
-    background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
-  }
-  50% {
-    background: linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%);
-  }
-  100% {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  }
+.all-data-section {
+  margin-top: 20px;
+  width: 100%;
+  max-width: 800px;
+  overflow-x: auto;
+  border-radius: 8px;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+}
+
+.all-data-section h2 {
+  text-align: center;
+  margin-bottom: 20px;
 }
 
 button {
@@ -269,7 +333,9 @@ button {
   border-radius: 8px;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   cursor: pointer;
-  transition: background 0.3s ease, transform 0.3s ease;
+  transition:
+    background 0.3s ease,
+    transform 0.3s ease;
 }
 
 button:hover {
@@ -281,7 +347,8 @@ button:active {
   transform: translateY(1px);
 }
 
-.custom-input-date, .search-filter input {
+.custom-input-date,
+.search-filter input {
   padding: 8px;
   font-size: 14px;
   border: 1px solid #ccc;
@@ -292,7 +359,8 @@ button:active {
   background-color: rgba(255, 255, 255, 0.8);
 }
 
-.custom-input-date:hover, .search-filter input:hover {
+.custom-input-date:hover,
+.search-filter input:hover {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
@@ -308,7 +376,8 @@ table:hover {
   transform: scale(1.02);
 }
 
-th, td {
+th,
+td {
   padding: 10px;
   border: 1px solid #ddd;
   text-align: left;
@@ -316,7 +385,7 @@ th, td {
 }
 
 th {
-  background-color: rgba(118, 74, 162, 0.9);
+  background-color: rgba(177, 134, 220, 0.9);
   color: #fff;
 }
 
@@ -333,9 +402,7 @@ tr:hover td {
   flex-direction: column;
   gap: 10px;
   padding: 20px;
-  background: linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%);
   border-radius: 10px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
   transform: scale(0.9);
   opacity: 0;
   animation: fadeInModal 0.4s forwards;
@@ -369,4 +436,3 @@ tr:hover td {
   align-items: center;
 }
 </style>
-

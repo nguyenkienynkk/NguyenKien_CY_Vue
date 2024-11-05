@@ -17,7 +17,7 @@
         </td>
         <td v-for="column in columns" :key="column.key">
           <template v-if="column.key === 'status'">
-            {{ item.status }} <!-- Chỉ hiển thị status như một chuỗi văn bản -->
+            <span :class="`status-tag status-${item.status}`">{{ item.status }}</span>
           </template>
           <template v-else>
             {{ item[column.key] }}
@@ -32,7 +32,6 @@
   </div>
 </template>
 
-
 <script setup lang="ts">
 import { ref } from 'vue'
 import { defineProps } from 'vue'
@@ -44,7 +43,6 @@ const props = defineProps<{
   showActionColumn: boolean;
 }>()
 
-
 const selectAll = ref(false)
 const toggleSelectAll = () => {
   props.tableData.forEach(item => {
@@ -54,7 +52,6 @@ const toggleSelectAll = () => {
 </script>
 
 <style scoped>
-/* Gradient nền cho toàn bộ container */
 .table-container {
   margin: 20px;
   padding: 20px;
@@ -69,15 +66,14 @@ table {
   border-collapse: collapse;
   background-color: #f9f9f9;
   border-radius: 8px;
-  font-size: 18px;
 }
 
 th {
-  background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
-  color: #ffffff;
-  font-weight: bold;
+  background: #F1F7F9;
+  color: #333;
+  font-size: 14px;
+  padding: 10px 20px;
   text-transform: uppercase;
-  padding: 12px 20px;
   text-align: left;
   border-bottom: 1px solid #ddd;
 }
@@ -96,5 +92,29 @@ tr:nth-child(even) td {
   background-color: #f0f0f0;
 }
 
+.status-tag {
+  display: inline-block;
+  padding: 4px 8px;
+  font-size: 12px;
+  font-weight: bold;
+  color: #fff;
+  border-radius: 4px;
+  text-transform: uppercase;
+}
+
+.status-todo {
+  background-color: #a0f3f3;
+  color: blue;
+}
+
+.status-done {
+  background-color: #bff5bf;
+  color: green;
+}
+
+.status-reject {
+  background-color: #f8c5c5;
+  color: red;
+}
 </style>
 

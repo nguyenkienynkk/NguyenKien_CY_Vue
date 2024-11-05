@@ -78,9 +78,6 @@ function closeModal() {
   transition: background-color 0.3s;
 }
 
-.modal-content button:hover {
-  background-color: #3b7dd8;
-}
 
 .modal-content input,
 .modal-content select {

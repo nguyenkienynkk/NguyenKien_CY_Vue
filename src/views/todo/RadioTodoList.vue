@@ -46,22 +46,21 @@ watch(() => props.modelValue, (newValue) => {
   display: flex;
   align-items: center;
   cursor: pointer;
-  padding: 10px;
-  border: 2px solid #ddd;
+  padding: 8px 20px;
+  border: 1px solid #333333;
   border-radius: 4px;
   transition: border-color 0.3s, transform 0.2s;
-  background: linear-gradient(135deg, #ffffff, #f9f9f9);
 }
 
 .custom-radio:hover {
-  border-color: #4a90e2;
+  border-color: #A568C7;
   transform: scale(1.05);
 }
 
 .radio-circle {
-  width: 20px;
-  height: 20px;
-  border: 2px solid #4a90e2;
+  width: 15px;
+  height: 15px;
+  border: 1px solid #4a90e2;
   border-radius: 50%;
   margin-right: 10px;
   position: relative;
