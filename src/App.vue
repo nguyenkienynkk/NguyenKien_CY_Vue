@@ -2,7 +2,7 @@
 import { RouterLink, RouterView } from 'vue-router'
 </script>
 <template>
-  <RouterLink class="nav-link" :to="{ name: 'bai7' }"></RouterLink>
+  <RouterLink class="nav-link" :to="{ name: 'bai9' }"></RouterLink>
   <RouterView />
 </template>
 <style scoped></style>

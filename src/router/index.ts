@@ -6,8 +6,8 @@ import Bai5 from '@/views/bai5/bai5.vue'
 import Bai6 from '@/views/bai6/bai6.vue'
 import bai7 from '@/views/bai7/bai7.vue'
 import MainContent from '@/views/bai7/MainContent.vue'
-import NoteDetail from '@/views/bai7/PostDetail.vue'
 import PostDetail from '@/views/bai7/PostDetail.vue'
+import Bai9 from '@/views/bai9/bai9.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -51,6 +51,12 @@ const router = createRouter({
       path: '/post/:id',
       name: 'post-detail',
       component: PostDetail,
+      props:true
+    },
+    {
+      path: '/bai9',
+      name: 'bai9',
+      component: Bai9,
       props:true
     }
   ]
