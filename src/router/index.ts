@@ -8,6 +8,7 @@ import bai7 from '@/views/bai7/bai7.vue'
 import MainContent from '@/views/bai7/MainContent.vue'
 import PostDetail from '@/views/bai7/PostDetail.vue'
 import Bai9 from '@/views/bai9/bai9.vue'
+import Bai10 from '@/views/bai10/bai10.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -58,6 +59,11 @@ const router = createRouter({
       name: 'bai9',
       component: Bai9,
       props:true
+    },
+    {
+      path: '/bai10',
+      name: 'bai10',
+      component: Bai10,
     }
   ]
 })
